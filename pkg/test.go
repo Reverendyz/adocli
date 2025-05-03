@@ -5,25 +5,18 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/microsoft/azure-devops-go-api/azuredevops"
 	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
 	"github.com/reverendyz/adocli/utils"
 )
 
 func TestFunc(organizationUrl string) {
-	fmt.Println("TestCalled")
-	personalAccessToken := utils.GetEnvOrDefault("ADOCLI_PAT", "")
 
-	connection := azuredevops.NewPatConnection(organizationUrl, personalAccessToken)
-
-	ctx := context.Background()
-
-	coreClient, err := core.NewClient(ctx, connection)
+	coreClient, err := utils.GetClient(organizationUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	responseValue, err := coreClient.GetProjects(ctx, core.GetProjectsArgs{})
+	responseValue, err := coreClient.GetProjects(context.Background(), core.GetProjectsArgs{})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -47,7 +40,7 @@ func TestFunc(organizationUrl string) {
 				ContinuationToken: &continuationToken,
 			}
 			fmt.Println(continuationToken)
-			responseValue, err = coreClient.GetProjects(ctx, projectArgs)
+			responseValue, err = coreClient.GetProjects(context.Background(), projectArgs)
 			if err != nil {
 				log.Fatal(err)
 			}
