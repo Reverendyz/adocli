@@ -21,6 +21,6 @@ func GetTeams(organizationUrl string, projectId string) {
 	}
 
 	for _, team := range *webApiTeamList {
-		log.Printf("Team = %v", *team.Name)
+		log.Printf("Team = %v", *team)
 	}
 }
