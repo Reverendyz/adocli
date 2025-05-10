@@ -8,6 +8,7 @@ import (
 
 	"github.com/reverendyz/adocli/cmd/item"
 	"github.com/reverendyz/adocli/cmd/projects"
+	"github.com/reverendyz/adocli/cmd/teams"
 	"github.com/spf13/cobra"
 )
 
@@ -27,4 +28,5 @@ func Execute() {
 func init() {
 	rootCmd.AddCommand(item.ItemCmd)
 	rootCmd.AddCommand(projects.ProjectsCmd)
+	rootCmd.AddCommand(teams.TeamCmd)
 }

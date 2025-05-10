@@ -1,4 +1,4 @@
-package pkg
+package get
 
 import (
 	"context"
@@ -9,8 +9,7 @@ import (
 	"github.com/reverendyz/adocli/utils"
 )
 
-func TestFunc(organizationUrl string) {
-
+func GetProjects(organizationUrl string) {
 	coreClient, err := utils.GetClient(organizationUrl)
 	if err != nil {
 		log.Fatal(err)
@@ -25,12 +24,11 @@ func TestFunc(organizationUrl string) {
 	for responseValue != nil {
 
 		for _, teamProjectReference := range (*responseValue).Value {
-			log.Printf("Name[%v] = %v", index, *teamProjectReference.Name)
+			log.Printf("Name[%v] = %v; ID: %v", index, *teamProjectReference.Name, teamProjectReference.Id)
 			index++
 		}
 
 		if responseValue.ContinuationToken != "" {
-
 			continuationToken := responseValue.ContinuationToken
 			if err != nil {
 				log.Fatal(err)
