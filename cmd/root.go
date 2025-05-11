@@ -29,4 +29,6 @@ func init() {
 	rootCmd.AddCommand(item.ItemCmd)
 	rootCmd.AddCommand(projects.ProjectsCmd)
 	rootCmd.AddCommand(teams.TeamCmd)
+
+	rootCmd.Flags().StringP("organization", "o", "", "organization string to execute the commands")
 }
