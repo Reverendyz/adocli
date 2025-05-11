@@ -1,7 +1,7 @@
 package projects
 
 import (
-	"github.com/reverendyz/adocli/cmd/projects/get"
+	"github.com/reverendyz/adocli/cmd/projects/list"
 	"github.com/spf13/cobra"
 )
 
@@ -11,5 +11,5 @@ var ProjectsCmd = &cobra.Command{
 }
 
 func init() {
-	ProjectsCmd.AddCommand(get.GetProjectsCommand)
+	ProjectsCmd.AddCommand(list.ProjectsListCommand)
 }

@@ -1,4 +1,4 @@
-package get
+package list
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"github.com/reverendyz/adocli/utils"
 )
 
-func GetProjects(organizationUrl string) {
+func ProjectsList(organizationUrl string) {
 	coreClient, err := utils.GetClient(organizationUrl)
 	if err != nil {
 		log.Fatal(err)

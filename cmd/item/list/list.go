@@ -7,7 +7,7 @@ import (
 )
 
 // listCmd represents the list command
-var ListCmd = &cobra.Command{
+var ItemListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
