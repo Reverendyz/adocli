@@ -10,7 +10,8 @@ import (
 
 type Config struct {
 	OrganizationUrl string `json:"organizationUrl"`
-	ProjectId       string `json:"teamId"`
+	ProjectId       string `json:"projectId"`
+	TeamId          string `json:"teamId"`
 }
 
 func getConfigPath() (string, error) {
@@ -49,7 +50,7 @@ func SetCache(config Config) error {
 	return os.WriteFile(configPath, data, 0644)
 }
 
-func GetCache(key string) (string, error) {
+func GetFromConfig(key string) (string, error) {
 	configPath, err := getConfigPath()
 	if err != nil {
 		return "", err
