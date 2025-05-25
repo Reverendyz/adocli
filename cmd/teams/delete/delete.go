@@ -2,17 +2,19 @@ package delete
 
 import (
 	"fmt"
-	"os"
 
+	"github.com/reverendyz/adocli/pkg/teams/delete"
 	"github.com/spf13/cobra"
 )
 
 var (
-	CreateTeamCommand = &cobra.Command{
-		Use:   "create",
+	DeleteTeamCommand = &cobra.Command{
+		Use:   "delete",
 		Short: "Command to create new team from",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := delete.DeleteTeam(os.Args[0])
+			teamName := args[0]
+			fmt.Println(teamName)
+			err := delete.DeleteTeam(teamName)
 			if err != nil {
 				fmt.Printf("Error: %v", err)
 			}

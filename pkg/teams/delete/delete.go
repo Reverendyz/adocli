@@ -17,12 +17,20 @@ func DeleteTeam(teamId string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(organizationUrl)
-	fmt.Println(projectId)
 	coreClient, err := utils.GetClient(organizationUrl)
 	if err != nil {
 		return err
 	}
+
+	team, err := coreClient.GetTeam(context.Background(), core.GetTeamArgs{
+		ProjectId: &projectId,
+		TeamId:    &teamId,
+	})
+	if err != nil {
+		return err
+	}
+
+	teamId = team.Id.String()
 
 	err = coreClient.DeleteTeam(context.Background(), core.DeleteTeamArgs{
 		TeamId:    &teamId,
