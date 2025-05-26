@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/reverendyz/adocli/cmd/item"
+	"github.com/reverendyz/adocli/cmd/organization"
 	"github.com/reverendyz/adocli/cmd/projects"
 	"github.com/reverendyz/adocli/cmd/teams"
 	"github.com/spf13/cobra"
@@ -25,9 +26,12 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.PersistentFlags().StringP("organization-url", "o", "", "organization string to be used in a single run")
+	rootCmd.PersistentFlags().StringP("project-id", "p", "", "project id string to be used in a single run")
+
 	rootCmd.AddCommand(item.ItemCmd)
 	rootCmd.AddCommand(projects.ProjectsCmd)
 	rootCmd.AddCommand(teams.TeamCmd)
+	rootCmd.AddCommand(organization.OrganizationCommand)
 
-	rootCmd.Flags().StringP("organization", "o", "", "organization string to execute the commands")
 }

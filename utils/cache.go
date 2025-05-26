@@ -14,7 +14,7 @@ type Config struct {
 	TeamId          string `json:"teamId"`
 }
 
-func getConfigPath() (string, error) {
+func GetOrCreateConfigPath() (string, error) {
 	var homeDir string
 	var err error
 
@@ -37,7 +37,7 @@ func getConfigPath() (string, error) {
 }
 
 func SetCache(config Config) error {
-	configPath, err := getConfigPath()
+	configPath, err := GetOrCreateConfigPath()
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func SetCache(config Config) error {
 }
 
 func GetFromConfig(key string) (string, error) {
-	configPath, err := getConfigPath()
+	configPath, err := GetOrCreateConfigPath()
 	if err != nil {
 		return "", err
 	}
