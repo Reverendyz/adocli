@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/reverendyz/adocli/utils"
+	"github.com/reverendyz/adocli/pkg/internal/common"
 )
 
 func SetOrganizationInConfigFile(organizationUrl string) error {
-	configPath, err := utils.GetOrCreateConfigPath()
+	configPath, err := common.GetOrCreateConfigPath()
 	if err != nil {
 		return err
 	}
@@ -18,7 +18,7 @@ func SetOrganizationInConfigFile(organizationUrl string) error {
 		return err
 	}
 
-	var config utils.Config
+	var config common.Config
 	if len(data) > 0 {
 		if err := json.Unmarshal(data, &config); err != nil {
 			return err

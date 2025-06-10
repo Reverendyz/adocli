@@ -5,11 +5,11 @@ import (
 	"log"
 
 	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
-	"github.com/reverendyz/adocli/utils"
+	"github.com/reverendyz/adocli/pkg/internal/common"
 )
 
 func GetTeams(organizationUrl string, projectId string) {
-	coreClient, err := utils.GetClient(organizationUrl)
+	coreClient, err := common.GetClient(organizationUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
