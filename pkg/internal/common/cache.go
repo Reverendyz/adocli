@@ -23,9 +23,7 @@ func GetOrCreateConfigPath() (string, error) {
 	} else {
 		homeDir, err = os.UserHomeDir()
 		if err != nil {
-			if err != nil {
-				return "", err
-			}
+			return "", err
 		}
 	}
 	configDir := filepath.Join(homeDir, "config")
