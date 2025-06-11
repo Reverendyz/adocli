@@ -4,7 +4,7 @@ done using [azuredevops](https://pkg.go.dev/github.com/microsoft/azure-devops-go
 
 ## Set up before usage
 
-Go to your Azure DevOps console and create a PAT 
+Go to your Azure DevOps console and create a PAT
 
 Export an Environment Variable with the PAT.
 
