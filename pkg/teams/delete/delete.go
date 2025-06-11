@@ -5,19 +5,20 @@ import (
 	"fmt"
 
 	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
-	"github.com/reverendyz/adocli/pkg/internal/common"
+	"github.com/reverendyz/adocli/common"
+	"github.com/reverendyz/adocli/config"
 )
 
 func DeleteTeam(teamId string) error {
-	organizationUrl, err := common.GetFromConfig("organizationUrl")
+	organizationUrl, err := config.GetFromConfig("organizationUrl")
 	if err != nil {
 		return err
 	}
-	projectId, err := common.GetFromConfig("projectId")
+	projectId, err := config.GetFromConfig("projectId")
 	if err != nil {
 		return err
 	}
-	coreClient, err := common.GetClient(organizationUrl)
+	coreClient, err := common.GetCoreClient(organizationUrl)
 	if err != nil {
 		return err
 	}

@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/reverendyz/adocli/pkg/internal/common"
+	"github.com/reverendyz/adocli/config"
 )
 
 func SetProjectInConfigFile(projectId string) error {
-	configPath, err := common.GetOrCreateConfigPath()
+	configPath, err := config.GetOrCreateConfigPath()
 	if err != nil {
 		return err
 	}
@@ -18,7 +18,7 @@ func SetProjectInConfigFile(projectId string) error {
 		return err
 	}
 
-	var config common.Config
+	var config config.Config
 	if len(data) > 0 {
 		if err := json.Unmarshal(data, &config); err != nil {
 			return err

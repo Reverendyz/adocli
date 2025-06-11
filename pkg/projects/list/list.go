@@ -6,11 +6,11 @@ import (
 	"log"
 
 	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
-	"github.com/reverendyz/adocli/pkg/internal/common"
+	"github.com/reverendyz/adocli/common"
 )
 
 func ProjectsList(organizationUrl string) {
-	coreClient, err := common.GetClient(organizationUrl)
+	coreClient, err := common.GetCoreClient(organizationUrl)
 	if err != nil {
 		log.Fatal(err)
 	}

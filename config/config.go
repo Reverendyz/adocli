@@ -1,4 +1,4 @@
-package common
+package config
 
 import (
 	"encoding/json"
@@ -6,6 +6,12 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+)
+
+var (
+	ProjectId       string
+	OrganizationUrl string
+	ProjectName     string
 )
 
 type Config struct {
