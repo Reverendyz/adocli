@@ -31,7 +31,5 @@ func SetOrganizationInConfigFile(organizationUrl string) error {
 		return err
 	}
 
-	os.WriteFile(configPath, updatedData, 0644)
-
-	return nil
+	return os.WriteFile(configPath, updatedData, 0644)
 }

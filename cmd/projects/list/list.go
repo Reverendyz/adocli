@@ -8,9 +8,10 @@ import (
 
 var (
 	ProjectsListCommand = &cobra.Command{
-		Use: "list",
-		Run: func(cmd *cobra.Command, args []string) {
-			list.ProjectsList(config.OrganizationUrl)
+		Use:   "list",
+		Short: "List all projects in the organization",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return list.ProjectsList(config.OrganizationUrl)
 		},
 	}
 )

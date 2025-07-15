@@ -9,7 +9,8 @@ import (
 var (
 	ProjectsCmd = &cobra.Command{
 		Use:   "projects",
-		Short: "handles projects commands",
+		Short: "Manage Azure DevOps projects",
+		Long:  "Manage Azure DevOps projects including list and set operations.",
 	}
 )
 

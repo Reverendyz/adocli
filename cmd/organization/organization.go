@@ -8,7 +8,8 @@ import (
 var (
 	OrganizationCommand = &cobra.Command{
 		Use:   "organization",
-		Short: "Manages organization options",
+		Short: "Manage organization configuration",
+		Long:  "Manage organization options and configuration for Azure DevOps.",
 	}
 )
 

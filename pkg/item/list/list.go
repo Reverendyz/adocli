@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
 	"github.com/microsoft/azure-devops-go-api/azuredevops/workitemtracking"
 	"github.com/reverendyz/adocli/common"
 	"github.com/reverendyz/adocli/config"
+	"github.com/reverendyz/adocli/logger"
+	"go.uber.org/zap"
 )
 
 func ListAllWorkItemTracking() error {
@@ -15,7 +16,7 @@ func ListAllWorkItemTracking() error {
 	if err != nil {
 		return err
 	}
-	config.ProjectName, err = getProjectName()
+	config.ProjectName, err = common.GetProjectName()
 	if err != nil {
 		return err
 	}
@@ -30,7 +31,7 @@ func ListAllWorkItemTracking() error {
 		return err
 	}
 	if result.WorkItems == nil || len(*result.WorkItems) == 0 {
-		fmt.Println("No workItem was found in this project")
+		logger.Info("No work items found in this project")
 		return nil
 	}
 
@@ -53,7 +54,10 @@ func ListAllWorkItemTracking() error {
 	}
 
 	for _, wi := range allItems {
-		fmt.Printf("ID: %d – Title: %s\n", *wi.Id, (*wi.Fields)["System.Title"])
+		logger.Info("Work Item",
+			zap.Int("ID", *wi.Id),
+			zap.String("Title", (*wi.Fields)["System.Title"].(string)),
+		)
 	}
 
 	return nil
@@ -69,18 +73,4 @@ func splitIDs(ids []int, batchSize int) [][]int {
 		batches = append(batches, ids[i:end])
 	}
 	return batches
-}
-
-func getProjectName() (string, error) {
-	client, err := common.GetCoreClient(config.OrganizationUrl)
-	if err != nil {
-		return "", err
-	}
-	teamProject, err := client.GetProject(context.Background(), core.GetProjectArgs{
-		ProjectId: &config.ProjectId,
-	})
-	if err != nil {
-		return "", err
-	}
-	return *teamProject.Name, nil
 }

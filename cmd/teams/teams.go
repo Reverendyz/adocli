@@ -10,7 +10,8 @@ import (
 var (
 	TeamCmd = &cobra.Command{
 		Use:   "teams",
-		Short: "Handles Azure Devops teams",
+		Short: "Manage Azure DevOps teams",
+		Long:  "Manage Azure DevOps teams including create, delete, and describe operations.",
 	}
 )
 

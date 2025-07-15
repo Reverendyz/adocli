@@ -2,49 +2,50 @@ package list
 
 import (
 	"context"
-	"fmt"
-	"log"
 
 	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
 	"github.com/reverendyz/adocli/common"
+	"github.com/reverendyz/adocli/logger"
+	"go.uber.org/zap"
 )
 
-func ProjectsList(organizationUrl string) {
+func ProjectsList(organizationUrl string) error {
 	coreClient, err := common.GetCoreClient(organizationUrl)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	responseValue, err := coreClient.GetProjects(context.Background(), core.GetProjectsArgs{})
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	index := 0
 	for responseValue != nil {
 
 		for _, teamProjectReference := range (*responseValue).Value {
-			log.Printf("Name[%v] = %v; ID: %v", index, *teamProjectReference.Name, teamProjectReference.Id)
+			logger.Info("Project",
+				zap.Int("Index", index),
+				zap.String("Name", *teamProjectReference.Name),
+				zap.String("ID", teamProjectReference.Id.String()),
+			)
 			index++
 		}
 
 		if responseValue.ContinuationToken != "" {
 			continuationToken := responseValue.ContinuationToken
-			if err != nil {
-				log.Fatal(err)
-			}
 
 			projectArgs := core.GetProjectsArgs{
 				ContinuationToken: &continuationToken,
 			}
-			fmt.Println(continuationToken)
 			responseValue, err = coreClient.GetProjects(context.Background(), projectArgs)
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 		} else {
 			responseValue = nil
 		}
 	}
 
+	return nil
 }

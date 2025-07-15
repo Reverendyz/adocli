@@ -1,8 +1,6 @@
 package create
 
 import (
-	"fmt"
-
 	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
 	"github.com/reverendyz/adocli/pkg/teams/create"
 	"github.com/spf13/cobra"
@@ -10,16 +8,14 @@ import (
 
 var (
 	CreateTeamCommand = &cobra.Command{
-		Use:   "create",
-		Short: "Command to create new team from",
-		Run: func(cmd *cobra.Command, args []string) {
-			err := create.CreateTeam(&core.WebApiTeam{
+		Use:   "create <team-name> <project-name>",
+		Short: "Creates a new team in the specified project",
+		Args:  cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return create.CreateTeam(&core.WebApiTeam{
 				Name:        &args[0],
 				ProjectName: &args[1],
 			})
-			if err != nil {
-				fmt.Printf("Error: %v", err)
-			}
 		},
 	}
 )

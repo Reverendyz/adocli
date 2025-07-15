@@ -2,11 +2,12 @@ package create
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
 	"github.com/reverendyz/adocli/common"
 	"github.com/reverendyz/adocli/config"
+	"github.com/reverendyz/adocli/logger"
+	"go.uber.org/zap"
 )
 
 func CreateTeam(webApiTeam *core.WebApiTeam) error {
@@ -18,8 +19,6 @@ func CreateTeam(webApiTeam *core.WebApiTeam) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(organizationUrl)
-	fmt.Println(projectId)
 	coreClient, err := common.GetCoreClient(organizationUrl)
 	if err != nil {
 		return err
@@ -33,7 +32,10 @@ func CreateTeam(webApiTeam *core.WebApiTeam) error {
 		return err
 	}
 
-	fmt.Println(*webApiTeamResponse)
+	logger.Info("Team created successfully",
+		zap.String("ID", webApiTeamResponse.Id.String()),
+		zap.String("Name", *webApiTeamResponse.Name),
+	)
 
 	return nil
 }

@@ -7,10 +7,11 @@ import (
 
 var (
 	OrganizationSetCommand = &cobra.Command{
-		Use:   "set",
+		Use:   "set <organization-url>",
 		Short: "sets organization URL in cache for further usage. For single run, use -o <organization URL> option.",
-		Run: func(cmd *cobra.Command, args []string) {
-			set.SetOrganizationInConfigFile(args[0])
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return set.SetOrganizationInConfigFile(args[0])
 		},
 	}
 )

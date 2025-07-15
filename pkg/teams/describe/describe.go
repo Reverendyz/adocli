@@ -2,64 +2,54 @@ package describe
 
 import (
 	"context"
-	"log"
 
 	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
 	"github.com/reverendyz/adocli/common"
+	"github.com/reverendyz/adocli/logger"
+	"go.uber.org/zap"
 )
 
-func GetTeams(organizationUrl string, projectId string) {
+func GetTeams(organizationUrl string, projectId string) error {
 	coreClient, err := common.GetCoreClient(organizationUrl)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	webApiTeamList, err := coreClient.GetTeams(context.Background(), core.GetTeamsArgs{
 		ProjectId: &projectId,
 	})
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	for _, team := range *webApiTeamList {
-		log.Println("Team Details:")
-		log.Printf("  ID: %s", team.Id.String())
+		fields := []zap.Field{
+			zap.String("ID", team.Id.String()),
+		}
 
 		if team.Name != nil {
-			log.Printf("  Name: %s", *team.Name)
-		} else {
-			log.Println("  Name: <nil>")
+			fields = append(fields, zap.String("Name", *team.Name))
 		}
 
 		if team.Url != nil {
-			log.Printf("  URL: %s", *team.Url)
-		} else {
-			log.Println("  URL: <nil>")
+			fields = append(fields, zap.String("URL", *team.Url))
 		}
 
 		if team.Description != nil {
-			log.Printf("  Description: %s", *team.Description)
-		} else {
-			log.Println("  Description: <nil>")
+			fields = append(fields, zap.String("Description", *team.Description))
 		}
 
 		if team.IdentityUrl != nil {
-			log.Printf("  Identity URL: %s", *team.IdentityUrl)
-		} else {
-			log.Println("  Identity URL: <nil>")
+			fields = append(fields, zap.String("IdentityURL", *team.IdentityUrl))
 		}
 
 		if team.ProjectName != nil {
-			log.Printf("  Project Name: %s", *team.ProjectName)
-		} else {
-			log.Println("  Project Name: <nil>")
+			fields = append(fields, zap.String("ProjectName", *team.ProjectName))
 		}
 
-		log.Printf("  Project ID: %s", team.ProjectId.String())
+		fields = append(fields, zap.String("ProjectID", team.ProjectId.String()))
 
-		if team.Url != nil {
-			log.Printf("  Project URL: %s", *team.Url)
-		} else {
-			log.Println("  Project URL: <nil>")
-		}
+		logger.Info("Team Details", fields...)
 	}
+
+	return nil
 }

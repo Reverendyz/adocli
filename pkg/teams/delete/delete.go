@@ -2,11 +2,12 @@ package delete
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
 	"github.com/reverendyz/adocli/common"
 	"github.com/reverendyz/adocli/config"
+	"github.com/reverendyz/adocli/logger"
+	"go.uber.org/zap"
 )
 
 func DeleteTeam(teamId string) error {
@@ -41,7 +42,7 @@ func DeleteTeam(teamId string) error {
 		return err
 	}
 
-	fmt.Printf("Team %s deleted \n", teamId)
+	logger.Info("Team deleted successfully", zap.String("TeamID", teamId))
 
 	return nil
 }

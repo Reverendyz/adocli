@@ -7,12 +7,11 @@ import (
 
 var (
 	GetTeamsCommand = &cobra.Command{
-		Use:   "describe",
+		Use:   "describe <organization-url> <project-id>",
 		Short: "Describe team under project",
-		Run: func(cmd *cobra.Command, args []string) {
-			organizationUrl := args[0]
-			projectId := args[1]
-			describe.GetTeams(organizationUrl, projectId)
+		Args:  cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return describe.GetTeams(args[0], args[1])
 		},
 	}
 )
