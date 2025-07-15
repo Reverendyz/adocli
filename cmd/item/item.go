@@ -1,6 +1,7 @@
 package item
 
 import (
+	"github.com/reverendyz/adocli/cmd/item/get"
 	"github.com/reverendyz/adocli/cmd/item/list"
 	"github.com/spf13/cobra"
 )
@@ -13,4 +14,5 @@ var ItemCmd = &cobra.Command{
 
 func init() {
 	ItemCmd.AddCommand(list.ItemListCmd)
+	ItemCmd.AddCommand(get.GetWorkItemCmd)
 }

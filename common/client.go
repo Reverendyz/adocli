@@ -7,6 +7,7 @@ import (
 	"github.com/microsoft/azure-devops-go-api/azuredevops"
 	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
 	"github.com/microsoft/azure-devops-go-api/azuredevops/workitemtracking"
+	"github.com/reverendyz/adocli/config"
 )
 
 func GetCoreClient(organizationUrl string) (core.Client, error) {
@@ -29,4 +30,18 @@ func GetWIClient(organizationUrl string) (workitemtracking.Client, error) {
 	defer cancel()
 
 	return workitemtracking.NewClient(ctx, connection)
+}
+
+func GetProjectName() (string, error) {
+	client, err := GetCoreClient(config.OrganizationUrl)
+	if err != nil {
+		return "", err
+	}
+	teamProject, err := client.GetProject(context.Background(), core.GetProjectArgs{
+		ProjectId: &config.ProjectId,
+	})
+	if err != nil {
+		return "", err
+	}
+	return *teamProject.Name, nil
 }

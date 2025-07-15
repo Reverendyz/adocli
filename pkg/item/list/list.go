@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/microsoft/azure-devops-go-api/azuredevops/core"
 	"github.com/microsoft/azure-devops-go-api/azuredevops/workitemtracking"
 	"github.com/reverendyz/adocli/common"
 	"github.com/reverendyz/adocli/config"
@@ -15,7 +14,7 @@ func ListAllWorkItemTracking() error {
 	if err != nil {
 		return err
 	}
-	config.ProjectName, err = getProjectName()
+	config.ProjectName, err = common.GetProjectName()
 	if err != nil {
 		return err
 	}
@@ -69,18 +68,4 @@ func splitIDs(ids []int, batchSize int) [][]int {
 		batches = append(batches, ids[i:end])
 	}
 	return batches
-}
-
-func getProjectName() (string, error) {
-	client, err := common.GetCoreClient(config.OrganizationUrl)
-	if err != nil {
-		return "", err
-	}
-	teamProject, err := client.GetProject(context.Background(), core.GetProjectArgs{
-		ProjectId: &config.ProjectId,
-	})
-	if err != nil {
-		return "", err
-	}
-	return *teamProject.Name, nil
 }

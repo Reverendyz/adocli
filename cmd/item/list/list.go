@@ -14,7 +14,7 @@ var ItemListCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		err := list.ListAllWorkItemTracking()
 		if err != nil {
-			fmt.Printf("Error: %s\n", err)
+			fmt.Printf("error: %v\n", err.Error())
 			os.Exit(1)
 		}
 	},
